@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wig Business | Cart</title>
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <script src="./shoppingCart.js" type="module" defer></script> <!-- Corrected path and MIME type -->
+    <script src="../src/main.js" type="module" defer></script> 
+  </head>
+  <body>
+    <header class="divider" id="main-header">
+      <h1>Wig Business</h1>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="cart.html">Cart 🛒 <span id="cart-count">0</span></a></li> <!-- Cart count here -->
+        </ul>
+      </nav>
+    </header>
+
+    <main class="divider">
+      <section class="products">
+        <h2>My Cart</h2>
+        <ul id="product-grid">
+          <!-- Dynamic product items will be populated here -->
+        </ul>
+        <div class="cart-footer hide">
+          <p class="cart-total">Total: $0.00</p>
+          <button id="checkout-btn">Proceed to Checkout</button>
+        </div>
+      </section>
+    </main>
+
+    <footer id="main-footer">
+      <p>&copy; 2024 Wig Business. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

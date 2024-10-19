@@ -1,0 +1,169 @@
+[
+    {
+        "id": "Classic Wig",
+        "name": "Classic Wig",
+        "price": 29.99,
+        "image": "../assets/images/classic-wig.jpg",
+        "description": "A timeless classic, this wig features a natural look and feel, perfect for daily wear.",
+        "color": "Brown",
+        "length": "Medium",
+        "material": "Synthetic",
+        "category": "glueless"
+    },
+    {
+        "id": "Curly Wig",
+        "name": "Curly Wig",
+        "price": 39.99,
+        "image": "../assets/images/curly-wig.jpg",
+        "description": "Embrace your playful side with this bouncy curly wig, ideal for special occasions.",
+        "color": "Black",
+        "length": "Short",
+        "material": "Human Hair",
+        "category": "glueless"
+    },
+    {
+        "id": "Long Hair Wig",
+        "name": "Long Hair Wig",
+        "price": 49.99,
+        "image": "../assets/images/long-hair-wig.jpg",
+        "description": "Get the luxurious look with this long hair wig, offering style and versatility.",
+        "color": "Blonde",
+        "length": "Long",
+        "material": "Synthetic",
+        "category": "glueless"
+    },
+    {
+        "id": "Short Bob Wig",
+        "name": "Short Bob Wig",
+        "price": 24.99,
+        "image": "../assets/images/short-bob-wig.jpg",
+        "description": "This chic short bob wig is easy to style and maintain, giving you a fresh look.",
+        "color": "Red",
+        "length": "Short",
+        "material": "Synthetic",
+        "category": "short"
+    },
+    {
+        "id": "Pixie Cut Wig",
+        "name": "Pixie Cut Wig",
+        "price": 34.99,
+        "image": "../assets/images/pixie-cut-wig.jpg",
+        "description": "Sport an edgy style with this trendy pixie cut wig, perfect for any fashion-forward individual.",
+        "color": "Black",
+        "length": "Short",
+        "material": "Human Hair",
+        "category": "short"
+    },
+    {
+        "id": "Straight Lace Front Wig",
+        "name": "Straight Lace Front Wig",
+        "price": 59.99,
+        "image": "../assets/images/straight-lace-front-wig.jpg",
+        "description": "Experience ultimate comfort and style with this straight lace front wig, perfect for any occasion.",
+        "color": "Dark Brown",
+        "length": "Long",
+        "material": "Human Hair",
+        "category": "glueless"
+    },
+    {
+        "id": "Wavy Hair Wig",
+        "name": "Wavy Hair Wig",
+        "price": 45.99,
+        "image": "../assets/images/wavy-hair-wig.jpg",
+        "description": "This wavy hair wig adds volume and texture, making it perfect for a bohemian look.",
+        "color": "Light Brown",
+        "length": "Medium",
+        "material": "Synthetic",
+        "category": "glueless"
+    },
+    {
+        "id": "Faux Hair Bun",
+        "name": "Faux Hair Bun",
+        "price": 15.99,
+        "image": "../assets/images/faux-hair-bun.jpg",
+        "description": "Quickly elevate your hairstyle with this easy-to-attach faux hair bun for a sophisticated look.",
+        "color": "Black",
+        "length": "Short",
+        "material": "Synthetic",
+        "category": "color"
+    },
+    {
+        "id": "Kinky Curly Wig",
+        "name": "Kinky Curly Wig",
+        "price": 39.99,
+        "image": "../assets/images/kinky-curly-wig.jpg",
+        "description": "This wig features tight, luscious curls, perfect for achieving a natural, textured look.",
+        "color": "Dark Brown",
+        "length": "Medium",
+        "material": "Human Hair",
+        "category": "color"
+    },
+    {
+        "id": "Shoulder Length Wig",
+        "name": "Shoulder Length Wig",
+        "price": 29.99,
+        "image": "../assets/images/shoulder-length-wig.jpg",
+        "description": "A versatile shoulder-length wig that can be styled in various ways for any occasion.",
+        "color": "Blonde",
+        "length": "Shoulder-Length",
+        "material": "Synthetic",
+        "category": "short"
+    },
+    {
+        "id": "Blonde Ombre Wig",
+        "name": "Blonde Ombre Wig",
+        "price": 54.99,
+        "image": "../assets/images/blonde-ombre-wig.jpg",
+        "description": "This stunning blonde ombre wig transitions beautifully from dark to light, adding depth to your look.",
+        "color": "Blonde Ombre",
+        "length": "Long",
+        "material": "Human Hair",
+        "category": "color"
+    },
+    {
+        "id": "Red Wave Wig",
+        "name": "Red Wave Wig",
+        "price": 49.99,
+        "image": "../assets/images/red-wave-wig.jpg",
+        "description": "Make a bold statement with this striking red wave wig, perfect for those who love to stand out.",
+        "color": "Red",
+        "length": "Long",
+        "material": "Synthetic",
+        "category": "color"
+    },
+    {
+        "id": "Glueless Wig",
+        "name": "Glueless Wig",
+        "price": 99.99,
+         "image": "../assets/images/glueless_wig.jpg",
+        "description": "A beautiful glueless wig.",
+        "color": "Black",
+        "length": "20 inches",
+        "material": "Synthetic",
+        "category": "glueless"
+    },
+    {
+        "id": "Color Wig",
+        "name": "Color Wig",
+         "price": 150.00,
+        "image": "../assets/images/color_wig.jpg",
+        "description": "A vibrant color wig.",
+        "color": "Red",
+        "length": "18 inches",
+        "material": "Human Hair",
+        "category": "color"
+    },
+    {
+        "id": "Short Wig",
+        "name": "Short Wig",
+         "price": 75.00,
+        "image": "../assets/images/short_wig.jpg",
+        "description": "A stylish short wig.",
+        "color": "Brown",
+        "length": "12 inches",
+        "material": "Synthetic",
+        "category": "short"
+       
+    }
+]
+

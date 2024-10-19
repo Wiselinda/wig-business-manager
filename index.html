@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wig Store | Home</title>
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> <!-- Font Awesome for icons -->
+</head>
+<body>
+    <header id="main-header">
+        <div class="header-content">
+            <a href="index.html">
+                <img src="../assets/images/logo.jpg" alt="Wig Business" id="logo" />
+            </a>
+            <div class="header-right">
+                <div class="currency-menu">
+                    <label for="currency">Currency:</label>
+                    <select id="currency">
+                        <option value="usd">USD</option>
+                        <option value="eur">EUR</option>
+                        <option value="gbp">GBP</option>
+                    </select>
+                </div>
+                <div class="icons">
+                    <a href="login.html" aria-label="Login/Register"><i class="fas fa-user"></i></a>
+                    <a href="./cart/cart.html" aria-label="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" style="display: none;">0</span>
+                    </a>
+                    <a href="wishlist.html" aria-label="Wishlist"><i class="fas fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- Hero slider section -->
+    <section id="hero-slider" class="hero-slider">
+        <div class="slide" style="background-image: url('assets/images/hero1.jpg');"></div>
+        <div class="slide" style="background-image: url('assets/images/hero2.jpg');"></div>
+        <div class="slide" style="background-image: url('assets/images/hero3.jpg');"></div>
+    </section>
+    <main>
+        <section class="category-section">
+            <h2>Shop by Category</h2>
+            <div class="category-grid">
+                <div class="category-item">
+                    <a href="product-listing/index.html?category=glueless">
+                        <img src="assets//images/glueless_wig.jpg" alt="Glueless Wig" />
+                        <h3>Glueless Wig</h3>
+                    </a>
+                </div>
+                <div class="category-item">
+                    <a href="product-listing/index.html?category=color">
+                        <img src="assets/images/color_wig.jpg" alt="Color Wig" />
+                        <h3>Color Wig</h3>
+                    </a>
+                </div>
+                <div class="category-item">
+                    <a href="product-listing/index.html?category=short">
+                        <img src="assets/images/short_wig.jpg" alt="Short Wig" />
+                        <h3>Short Wig</h3>
+                    </a>
+                </div>
+            </div>
+    </main>
+    </main>
+    </main>
+    <footer id="main-footer">
+        <p>&copy; 2024 Wig Store. All rights reserved.</p>
+        <nav>
+            <ul>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+            </ul>
+        </nav>
+    </footer>
+    <script src="src/main.js" type="module" defer></script>
+</body>
+</html>

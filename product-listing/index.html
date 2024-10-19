@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wig Store | Products</title>
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
+    <header id="main-header">
+        <div class="header-content">
+            <a href="../index.html">
+                <img src="../assets/images/logo.jpg" alt="Wig Business" id="logo" />
+            </a>
+            <div class="header-right">
+                <div class="currency-menu">
+                    <label for="currency">Currency:</label>
+                    <select id="currency">
+                        <option value="usd">USD</option>
+                        <option value="eur">EUR</option>
+                        <option value="gbp">GBP</option>
+                    </select>
+                </div>
+                <form id="search-form">
+                    <input type="text" id="search-input" placeholder="Search for wigs..." aria-label="Search for wigs" />
+                    <button type="submit">Search</button>
+                </form>
+                <div class="icons">
+                    <a href="../login.html" aria-label="Login/Register"><i class="fas fa-user"></i></a>
+                    <a href="../cart/cart.html" aria-label="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="item-count" style="display: none;">0</span>
+                    </a>
+                    <a href="../wishlist.html" aria-label="Wishlist"><i class="fas fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="products">
+            <h2>Available Wigs</h2>
+            <ul id="product-grid" class="product-grid">
+                <li>
+                <a href=".../product-page/product-detail.html?name=Classic%20Wig">
+                    <img src="../assets/images/classic-wig.jpg" alt="Classic Wig">
+                    <h3>Classic Wig</h3>
+                    <p>$29.99</p>
+                </a>
+            </li>
+            <li>
+                <a href="../product-page/product-detail.html?name=Curly%20Wig">
+                    <img src="../assets/images/curly-wig.jpg" alt="Curly Wig">
+                    <h3>Curly Wig</h3>
+                    <p>$39.99</p>
+                </a>
+            </li>
+            <!-- Repeat for other products -->
+            </ul>
+        </section>
+    </main>
+    <footer id="main-footer">
+        <p>&copy; 2024 Wig Store. All rights reserved.</p>
+        <nav>
+            <ul>
+                <li><a href="../privacy.html">Privacy Policy</a></li>
+                <li><a href="../terms.html">Terms of Service</a></li>
+            </ul>
+        </nav>
+    </footer>
+    <script src="../src/main.js" type="module" defer></script>
+</body>
+</html>
