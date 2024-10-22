@@ -164,6 +164,55 @@
         "material": "Synthetic",
         "category": "short"
        
+    },
+    {
+        "id": "Body Wave Headband",
+        "name": "Body Wave Headband",
+         "price": 55.00,
+        "image": "../assets/images/body-wave-headband-wig.jpg",
+        "description": "Body Wave Wigs with Headbands for Black Women Human Hair Wigs 150% Density Natural Black.",
+        "color": "Brown",
+        "length": "18 inches",
+        "material": "Synthetic",
+        "category": "headband"
+       
+    },
+    {
+        "id": "Deep Wave Headband",
+        "name": "Deep Wave Headband",
+         "price": 65.00,
+        "image": "../assets/images/headband_wig.jpg",
+        "description": "Headband Wig Loose Deep Wave Human Hair Wig For Black Women 150% Density.",
+        "color": "Brown",
+        "length": "16 inches",
+        "material": "Synthetic",
+        "category": "headband"
+       
+    },
+    {
+        "id": "Headband Loose",
+        "name": "Headband Loose",
+         "price": 55.00,
+        "image": "../assets/images/headband-loose-wig.jpg",
+        "description": "Headband Wig Loose Wave.",
+        "color": "Brown",
+        "length": "20 inches",
+        "material": "Synthetic",
+        "category": "headband"
+       
+    },
+    {
+        "id": "Curly Headband",
+        "name": "Curly Headband",
+         "price": 85.00,
+        "image": "../assets/images/curly-headband-wig.jpg",
+        "description": "Kinky Curly Headband Wigs Human Hair Wigs 150% Density Virgin Hair Natural Black.",
+        "color": "Brown",
+        "length": "18 inches",
+        "material": "Synthetic",
+        "category": "headband"
+       
     }
+
 ]
 

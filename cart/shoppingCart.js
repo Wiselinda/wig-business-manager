@@ -19,7 +19,7 @@ function cartItemTemplate(item) {
 }
 
 export default class ShoppingCart {
-    constructor(key, productGrid, cartFooterDOM) {  
+    constructor(key, productGrid, cartFooterDOM) {
         this.key = key;
         this.productGrid = productGrid;
         this.cartFooterDOM = cartFooterDOM;
@@ -29,21 +29,22 @@ export default class ShoppingCart {
     renderCartContents() {
         const cartItems = getLocalStorage(this.key) || [];
         
-        // Check if there are any items in the cart
         if (cartItems.length === 0) {
             document.querySelector(this.productGrid).innerHTML = "<li>Your cart is empty.</li>";
-            document.querySelector(this.cartFooterDOM).classList.add('hide'); // Hide footer if cart is empty
-            return;
+            document.querySelector(this.cartFooterDOM).classList.add('hide');
+        } else {
+            const htmlItems = cartItems.map(item => cartItemTemplate(item)).join('');
+            document.querySelector(this.productGrid).innerHTML = htmlItems;
+            document.querySelector(this.cartFooterDOM).classList.remove('hide');
+            this.updateCartEvents();
+            this.displayTotal(cartItems);
         }
 
-        const htmlItems = cartItems.map(item => cartItemTemplate(item)).join('');
-        document.querySelector(this.productGrid).innerHTML = htmlItems;
-        this.updateCartEvents();
-        this.displayTotal(cartItems);
         updateCartCount(); 
     }
 
     updateCartEvents() {
+        // Add event listeners after the elements are rendered
         this.removeFromCart(this.key);
         this.increaseInCart(this.key);
         this.decreaseInCart(this.key);
@@ -62,7 +63,7 @@ export default class ShoppingCart {
         const cartItems = getLocalStorage(key);
         const updatedCart = cartItems.filter(item => item.Id !== productId);
         setLocalStorage(key, updatedCart);
-        this.renderCartContents(); // Refresh the cart UI
+        this.renderCartContents();
     }
 
     increaseInCart(key) {
@@ -80,7 +81,7 @@ export default class ShoppingCart {
         if (item) {
             item.quantity += 1;
             setLocalStorage(key, cartItems);
-            this.renderCartContents(); // Refresh the cart UI
+            this.renderCartContents();
         }
     }
 
@@ -99,25 +100,17 @@ export default class ShoppingCart {
         if (item && item.quantity > 1) {
             item.quantity -= 1;
             setLocalStorage(key, cartItems);
-            this.renderCartContents(); // Refresh the cart UI
+            this.renderCartContents();
         }
     }
 
     displayTotal(cart) {
-        const cartFootDOM = document.querySelector(this.cartFooterDOM);
         const totalDOM = document.querySelector('.cart-total');
-        if (cart.length === 0) {
-            cartFootDOM.classList.add('hide');
-            totalDOM.innerHTML = 'Total: $0.00';
-        } else {
-            cartFootDOM.classList.remove('hide');
-            const total = cart.reduce((sum, item) => sum + item.FinalPrice * item.quantity, 0);
-            totalDOM.innerHTML = `Total: $${total.toFixed(2)}`;
-        }
+        const total = cart.reduce((sum, item) => sum + item.FinalPrice * item.quantity, 0);
+        totalDOM.innerHTML = `Total: $${total.toFixed(2)}`;
 
-        // Checkout button event
         document.getElementById('checkout-btn').addEventListener('click', () => {
-            window.location.href = '../checkout/index.html';  // Redirect to checkout page
+            window.location.href = '../checkout/index.html';
         });
     }
 }

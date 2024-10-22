@@ -17,17 +17,18 @@ function updateCartCount() {
 // Add a product to the cart
 function addToCart(product) {
     const cartItems = getLocalStorage('cart') || [];
-    const existingProduct = cartItems.find(item => item.name === product.name);
+    const existingProduct = cartItems.find(item => item.id === product.id || item.id === product.id);
 
     if (existingProduct) {
-        existingProduct.quantity += 1; // Increase quantity if product already exists
+        existingProduct.quantity += product.quantity; // Increase by selected quantity
     } else {
-        cartItems.push({ ...product, quantity: 1 }); // Add new product with quantity 1
+        cartItems.push({ ...product, quantity: product.quantity }); // Add new product with selected quantity
     }
 
     setLocalStorage('cart', cartItems); // Save updated cart to local storage
     updateCartCount(); // Update cart count displayed in the cart icon
 }
+
 
 // Fetch product details based on ID from URL
 async function fetchProductDetails() {
@@ -46,7 +47,10 @@ async function fetchProductDetails() {
         if (product) {
             displayProductDetails(product);
         } else {
-            console.error('Product not found');
+            document.getElementById('productName').textContent = 'Product not found';
+            document.getElementById('productDescription').textContent = '';
+            document.getElementById('productPrice').textContent = '';
+            document.getElementById('add-to-cart-button').style.display = 'none';
         }
     } catch (error) {
         console.error('Error fetching product details:', error);
@@ -55,7 +59,7 @@ async function fetchProductDetails() {
 
 // Function to display the product details
 function displayProductDetails(product) {
-    document.getElementById('productImage').src = product.image || '../assets/images/default_wig.jpg'; // Use 'image' property
+    document.getElementById('productImage').src = product.image ? product.image : '../assets/images/default_wig.jpg'; // Use 'image' property
     document.getElementById('productName').textContent = product.name;
     document.getElementById('productDescription').textContent = product.description;
     document.getElementById('productPrice').textContent = `$${product.price.toFixed(2)}`;
@@ -63,14 +67,27 @@ function displayProductDetails(product) {
     // Add event listener for the "Add to Cart" button
     const addToCartButton = document.getElementById('add-to-cart-button');
     addToCartButton.onclick = () => {
+        const quantity = parseInt(document.getElementById('productQuantity').value) || 1; // Get the selected quantity
+
         addToCart({
+            id: product.id,
             name: product.name,
             price: product.price,
             image: product.image,
-            description: product.description
+            description: product.description,
+            quantity: quantity
         });
     };
 }
+
+// Show the success message
+var message = document.getElementById('successMessage');
+message.classList.add('show');
+
+// Hide the message after 3 seconds
+setTimeout(function() {
+    message.classList.remove('show');
+}, 3000);
 
 // Back button functionality
 function goBack() {
