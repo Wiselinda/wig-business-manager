@@ -11,55 +11,52 @@ function setLocalStorage(key, data) {
 function updateCartCount() {
     const cartItems = getLocalStorage('cart');
     const cartCount = cartItems.reduce((count, item) => count + item.quantity, 0);
-    document.getElementById('cart-count').textContent = cartCount; // Ensure you have an element with id 'cart-count' in your navbar
+    document.getElementById('cart-count').textContent = cartCount; // Update cart count in the navbar
 }
 
 // Add a product to the cart
 function addToCart(product) {
-    const cartItems = getLocalStorage('cart') || [];
-    const existingProduct = cartItems.find(item => item.id === product.id || item.id === product.id);
+    const cartItems = getLocalStorage('cart');
+    const existingProduct = cartItems.find(item => item.id === product.id);
 
     if (existingProduct) {
-        existingProduct.quantity += product.quantity; // Increase by selected quantity
+        existingProduct.quantity += product.quantity; // Increase quantity if the product already exists in the cart
     } else {
-        cartItems.push({ ...product, quantity: product.quantity }); // Add new product with selected quantity
+        cartItems.push({ ...product, quantity: product.quantity }); // Add new product to the cart
     }
 
-    setLocalStorage('cart', cartItems); // Save updated cart to local storage
-    updateCartCount(); // Update cart count displayed in the cart icon
+    setLocalStorage('cart', cartItems); // Save the updated cart in local storage
+    updateCartCount(); // Update cart count in the navbar
+    showSuccessMessage(); // Show success message after adding the product to the cart
 }
 
-
-// Fetch product details based on ID from URL
+// Fetch product details based on the ID from the URL
 async function fetchProductDetails() {
     const urlParams = new URLSearchParams(window.location.search);
-    const productId = urlParams.get('id'); // Using 'id' to match with the JSON property
+    const productId = urlParams.get('id'); // Get the 'id' from the URL
 
     try {
-        const response = await fetch('../assets/products.json'); // Correct path to your products.json
+        const response = await fetch('../assets/products.json'); // Adjust path as necessary
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
 
-        const products = await response.json(); // Parse the JSON data into a variable
-        const product = products.find(item => item.id.toLowerCase() === productId.toLowerCase()); // Find the product by id
+        const products = await response.json();
+        const product = products.find(item => item.id.toLowerCase() === productId.toLowerCase());
 
         if (product) {
             displayProductDetails(product);
         } else {
-            document.getElementById('productName').textContent = 'Product not found';
-            document.getElementById('productDescription').textContent = '';
-            document.getElementById('productPrice').textContent = '';
-            document.getElementById('add-to-cart-button').style.display = 'none';
+            displayProductNotFound();
         }
     } catch (error) {
         console.error('Error fetching product details:', error);
     }
 }
 
-// Function to display the product details
+// Display product details on the page
 function displayProductDetails(product) {
-    document.getElementById('productImage').src = product.image ? product.image : '../assets/images/default_wig.jpg'; // Use 'image' property
+    document.getElementById('productImage').src = product.image || '../assets/images/default_wig.jpg'; // Use default if no image
     document.getElementById('productName').textContent = product.name;
     document.getElementById('productDescription').textContent = product.description;
     document.getElementById('productPrice').textContent = `$${product.price.toFixed(2)}`;
@@ -80,22 +77,32 @@ function displayProductDetails(product) {
     };
 }
 
-// Show the success message
-var message = document.getElementById('successMessage');
-message.classList.add('show');
-
-// Hide the message after 3 seconds
-setTimeout(function() {
-    message.classList.remove('show');
-}, 3000);
-
-// Back button functionality
-function goBack() {
-    window.history.back(); // Go back to the previous page
+// Display a message when a product is not found
+function displayProductNotFound() {
+    document.getElementById('productName').textContent = 'Product not found';
+    document.getElementById('productDescription').textContent = '';
+    document.getElementById('productPrice').textContent = '';
+    document.getElementById('add-to-cart-button').style.display = 'none';
 }
 
-// Initialize the page
+// Show success message when a product is added to the cart
+function showSuccessMessage() {
+    const message = document.getElementById('successMessage');
+    message.classList.add('show');
+
+    // Hide the success message after 3 seconds
+    setTimeout(() => {
+        message.classList.remove('show');
+    }, 3000);
+}
+
+// Go back to the previous page
+function goBack() {
+    window.history.back();
+}
+
+// Initialize the page once DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     fetchProductDetails(); // Fetch product details when the page loads
-    updateCartCount(); // Update cart count displayed in the navbar
+    updateCartCount(); // Update cart count in the navbar
 });

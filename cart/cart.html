@@ -4,32 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wig Business | Cart</title>
+    <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="../styles/styles.css" />
-    <script src="./shoppingCart.js" type="module" defer></script> <!-- Corrected path and MIME type -->
-    <script src="../src/main.js" type="module" defer></script> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   </head>
   <body>
-    <header class="divider" id="main-header">
-      <h1>Wig Business</h1>
-      <nav>
-        <ul>
-          <li><a href="../index.html">Home</a></li>
-          <li><a href="cart.html">Cart 🛒 <span id="cart-count">0</span></a></li> <!-- Cart count here -->
-        </ul>
-      </nav>
+    <header id="main-header">
+      <div class="header-content">
+          <a href="../index.html">
+              <img src="../assets/images/logo.jpg" alt="Wig Business" id="logo" />
+          </a>
+          <span id="cart-count">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="item-count">0</span>
+        </span>
     </header>
 
-    <main class="divider">
-      <section class="products">
-        <h2>My Cart</h2>
+    <main>
+        <h1>your shopping cart</h1>
         <ul id="product-grid"></ul>
-        <div id="cart-items"></div>
         <div class="cart-footer hide">
           <p class="cart-total">Total: $0.00</p>
-          <button id="checkout-btn">Proceed to Checkout</button>
+          <button id="checkout-btn" onclick="window.location.href='../checkout/checkout.html'">Proceed to Checkout</button>
         </div>
       </section>
     </main>
+
+    <script type="module" src="./cart.js"></script>
 
     <footer id="main-footer">
       <p>&copy; 2024 Wig Business. All rights reserved.</p>
