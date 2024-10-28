@@ -20,85 +20,90 @@
               <span class="item-count">0</span>
           </span>
       </header>
-    <div class="container">
-      <h2>Checkout</h2>
-      <form id="checkout-form">
-        <!-- Shipping Information -->
-        <h3>Shipping Information</h3>
-        <label for="name">Full Name</label>
-        <input type="text" id="name" name="name" placeholder="Enter your full name" required />
-
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email address" required />
-
-        <label for="address">Shipping Address</label>
-        <input type="text" id="address" name="address" placeholder="Enter your shipping address" required />
-
-        <label for="city">City</label>
-        <input type="text" id="city" name="city" placeholder="Enter your city" required />
-
-        <label for="state">State/Province</label>
-        <input type="text" id="state" name="state" placeholder="Enter your state or province" required />
-
-        <label for="zip">Postal/Zip Code</label>
-        <input type="text" id="zip" name="zip" placeholder="Enter your postal/zip code" required />
-
-        <label for="country">Country</label>
-        <select id="country" name="country" required>
-          <option value="">Select your country</option>
-          <option value="US">United States</option>
-          <option value="CA">Canada</option>
-          <!-- Add more country options as needed -->
-        </select>
-
-        <label for="shipping">Shipping Method</label>
-        <select id="shipping" name="shipping" required>
-          <option value="standard">Standard Shipping - $5.00</option>
-          <option value="express">Express Shipping - $15.00</option>
-        </select>
-
-        <!-- Payment Method Selection -->
-        <h3>Payment Information</h3>
-        <label for="payment-method">Select Payment Method</label>
-        <select id="payment-method" name="payment-method" required>
-          <option value="credit-card">Credit Card</option>
-          <option value="paypal">PayPal</option>
-        </select>
-
-        <!-- Credit Card Information -->
-        <div id="credit-card-info">
-          <label for="card-name">Cardholder's Name</label>
-          <input type="text" id="card-name" name="card-name" placeholder="Name on card" required />
-
-          <label for="card-number">Card Number</label>
-          <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" required />
-
-          <label for="exp-date">Expiration Date</label>
-          <input type="month" id="exp-date" name="exp-date" required />
-
-          <label for="cvv">CVV</label>
-          <input type="text" id="cvv" name="cvv" placeholder="123" required />
-        </div>
-
-        <!-- PayPal Information -->
-        <div id="paypal-info" style="display: none;">
-          <label for="paypal-email">PayPal Email</label>
-          <input type="email" id="paypal-email" name="paypal-email" placeholder="Enter your PayPal email" />
-        </div>
-
-        <!-- Order Summary -->
-        <div class="summary">
-          <h3>Order Summary</h3>
-          <p>Subtotal: $100.00</p>
-          <p>Tax: $8.00</p>
-          <p>Shipping: $5.00</p>
-          <p class="total">Order Total: $113.00</p>
-        </div>
-
-        <button type="submit">Submit Order</button>
-      </form>
-    </div>
-
-    <footer>
-      <p>&copy; 2024 Wig Business. All rights reserved.</p>
-    </footer>
+      <div class="container">
+        <h2>Checkout</h2>
+        <form id="checkout-form">
+          <!-- Shipping Information -->
+          <h3>Shipping Information</h3>
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+    
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email address" required />
+    
+          <label for="address">Shipping Address</label>
+          <input type="text" id="address" name="address" placeholder="Enter your shipping address" required />
+    
+          <label for="city">City</label>
+          <input type="text" id="city" name="city" placeholder="Enter your city" required />
+    
+          <label for="state">State/Province</label>
+          <input type="text" id="state" name="state" placeholder="Enter your state or province" required />
+    
+          <label for="zip">Postal/Zip Code</label>
+          <input type="text" id="zip" name="zip" placeholder="Enter your postal/zip code" required />
+    
+          <label for="country">Country</label>
+          <select id="country" name="country" required>
+            <option value="">Select your country</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <!-- Add more country options as needed -->
+          </select>
+    
+          <label for="shipping">Shipping Method</label>
+          <select id="shipping" name="shipping" required>
+            <option value="standard">Standard Shipping - $5.00</option>
+            <option value="express">Express Shipping - $15.00</option>
+          </select>
+    
+          <!-- Payment Method Selection -->
+          <h3>Payment Information</h3>
+          <div id="payment-buttons">
+            <button type="button" id="credit-card-btn" class="payment-btn">Credit Card</button>
+            <button type="button" id="paypal-btn" class="payment-btn">
+              <img src="../assets/images/paypal-icon.png" alt="PayPal" style="width: 20px; height: auto;" /> PayPal
+            </button>
+          </div>
+    
+          <!-- Credit Card Information -->
+          <div id="credit-card-info">
+            <label for="card-name">Cardholder's Name</label>
+            <input type="text" id="card-name" name="card-name" placeholder="Name on card" required />
+    
+            <label for="card-number">Card Number</label>
+            <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" required />
+    
+            <label for="exp-date">Expiration Date</label>
+            <input type="month" id="exp-date" name="exp-date" required />
+    
+            <label for="cvv">CVV</label>
+            <input type="text" id="cvv" name="cvv" placeholder="123" required />
+          </div>
+    
+          <!-- PayPal Information -->
+          <div id="paypal-info" style="display: none;">
+            <label for="paypal-email">PayPal Email</label>
+            <label for="paypal-email">PayPal Email</label>
+    <input type="text" id="paypal-email" placeholder="your-email@example.com" />
+  </div>
+    
+          <!-- Order Summary -->
+          <div class="summary">
+            <h3>Order Summary</h3>
+            <p>Items in cart: <span id="num-items">0</span></p>
+            <p>Subtotal: $<span id="subtotal">0.00</span></p>
+            <p>Tax: $<span id="tax">0.00</span></p>
+            <p>Shipping: $<span id="shipping-cost">0.00</span></p>
+            <p class="total">Order Total: $<span id="order-total">0.00</span></p>
+          </div>
+    
+          <button type="submit">Submit Order</button>
+        </form>
+      </div>
+    
+      <footer>
+        <p>&copy; 2024 Wig Business. All rights reserved.</p>
+      </footer>
+    </body>
+</html>

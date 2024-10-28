@@ -1,102 +1,142 @@
-import { getLocalStorage, updateCartCount } from '../cart.js';
+// Helper function to convert form data to JSON
+function formDataToJSON(formElement) {
+  const formData = new FormData(formElement);
+  const convertedJSON = {};
 
+  formData.forEach((value, key) => {
+    convertedJSON[key] = value;
+  });
+
+  return convertedJSON;
+}
+
+// Package cart items for order submission
+function packageItems(items) {
+  return items.map(item => ({
+    id: item.id,
+    price: item.price,
+    name: item.name,
+    quantity: item.quantity,
+  }));
+}
+
+class CheckoutProcess {
+  constructor(cartKey, outputSelector) {
+    this.cartKey = cartKey;
+    this.outputSelector = outputSelector;
+    this.cartItems = this.getCartItems();
+    this.init();
+  }
+
+  getCartItems() {
+    return JSON.parse(localStorage.getItem(this.cartKey)) || [];
+  }
+
+  // Calculate total values and update UI
+  calculateOrderSummary() {
+    let subtotal = 0;
+    this.cartItems.forEach(item => {
+      subtotal += item.price * item.quantity;
+    });
+
+    const tax = subtotal * 0.08; // Assume an 8% tax rate
+    const shippingCost = document.querySelector("#shipping").value === "express" ? 15.00 : 5.00;
+    const total = subtotal + tax + shippingCost;
+
+    document.getElementById("num-items").textContent = this.cartItems.length;
+    document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+    document.getElementById("tax").textContent = tax.toFixed(2);
+    document.getElementById("shipping-cost").textContent = shippingCost.toFixed(2);
+    document.getElementById("order-total").textContent = total.toFixed(2);
+
+    // Store total for confirmation during checkout
+    this.orderTotal = total;
+  }
+
+  init() {
+    this.calculateOrderSummary();
+    this.setupPaymentOptions();
+    this.setupOrderSubmission();
+  }
+
+  setupPaymentOptions() {
+    const creditCardInfo = document.getElementById("credit-card-info");
+    const paypalInfo = document.getElementById("paypal-info");
+
+    document.getElementById("credit-card-btn").addEventListener("click", () => {
+      creditCardInfo.style.display = "block";
+      paypalInfo.style.display = "none";
+
+      // Make Credit Card fields required
+      document.getElementById("card-name").setAttribute("required", true);
+      document.getElementById("card-number").setAttribute("required", true);
+      document.getElementById("exp-date").setAttribute("required", true);
+      document.getElementById("cvv").setAttribute("required", true);
+
+      // Remove required attribute from PayPal field
+      document.getElementById("paypal-email").removeAttribute("required");
+    });
+
+    document.getElementById("paypal-btn").addEventListener("click", () => {
+      creditCardInfo.style.display = "none";
+      paypalInfo.style.display = "block";
+
+      // Make PayPal field required
+      document.getElementById("paypal-email").setAttribute("required", true);
+
+      // Remove required attributes from Credit Card fields
+      document.getElementById("card-name").removeAttribute("required");
+      document.getElementById("card-number").removeAttribute("required");
+      document.getElementById("exp-date").removeAttribute("required");
+      document.getElementById("cvv").removeAttribute("required");
+    });
+
+    document.getElementById("shipping").addEventListener("change", () => {
+      this.calculateOrderSummary();
+    });
+  }
+
+  setupOrderSubmission() {
+    const checkoutForm = document.getElementById("checkout-form");
+    checkoutForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      // Validate the cart has items
+      if (this.cartItems.length === 0) {
+        alert("Your cart is empty. Please add items to proceed.");
+        return;
+      }
+
+      // Confirm the order total
+      const confirmed = confirm(`Your order total is $${this.orderTotal.toFixed(2)}. Confirm to place your order.`);
+      if (!confirmed) return;
+
+      // Convert form data to JSON and package cart items
+      const formData = formDataToJSON(checkoutForm);
+      const orderData = {
+        customerInfo: formData,
+        items: packageItems(this.cartItems),
+        total: this.orderTotal,
+      };
+
+      // Save orderData to local storage for record-keeping (or simulate sending to server)
+      localStorage.setItem("lastOrder", JSON.stringify(orderData));
+
+      // Clear cart after successful checkout
+      this.clearCart();
+
+      alert("Order placed successfully! Thank you for your purchase.");
+      window.location.href = "../index.html"; // Redirect to homepage or order confirmation page
+    });
+  }
+
+  clearCart() {
+    localStorage.removeItem(this.cartKey);
+    document.querySelector('#cart-count .item-count').textContent = '0'; // Reset cart count
+  }
+}
+
+// Initialize checkout process
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('checkout-form');
-  const cartItems = getLocalStorage('cart') || [];
-
-  // Calculate subtotal
-  let subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  let shipping = 5.00; // Flat rate shipping
-  let taxRate = 0.08; // 8% tax rate
-  let tax = subtotal * taxRate;
-  let total = subtotal + shipping + tax;
-
-  // Update the order summary in the DOM
-  document.querySelector('.summary p:nth-child(2)').textContent = `Subtotal: $${subtotal.toFixed(2)}`;
-  document.querySelector('.summary p:nth-child(3)').textContent = `Tax: $${tax.toFixed(2)}`;
-  document.querySelector('.summary p:nth-child(4)').textContent = `Shipping: $${shipping.toFixed(2)}`;
-  document.querySelector('.summary .total').textContent = `Order Total: $${total.toFixed(2)}`; // Fixed this line
-
-  updateCartCount(); // Update the cart icon count on the page
-
-  // Handle payment method switching
-  const paymentMethodSelect = document.getElementById('payment-method');
-  const creditCardInfo = document.getElementById('credit-card-info');
-  const paypalInfo = document.getElementById('paypal-info');
-
-  paymentMethodSelect.addEventListener('change', function () {
-    if (this.value === 'credit-card') {
-      creditCardInfo.style.display = 'block';
-      paypalInfo.style.display = 'none';
-      document.getElementById('card-name').required = true;
-      document.getElementById('card-number').required = true;
-      document.getElementById('exp-date').required = true;
-      document.getElementById('cvv').required = true;
-      document.getElementById('paypal-email').required = false;
-    } else if (this.value === 'paypal') {
-      creditCardInfo.style.display = 'none';
-      paypalInfo.style.display = 'block';
-      document.getElementById('card-name').required = false;
-      document.getElementById('card-number').required = false;
-      document.getElementById('exp-date').required = false;
-      document.getElementById('cvv').required = false;
-      document.getElementById('paypal-email').required = true;
-    }
-  });
-
-  // Default to showing the credit card fields
-  paymentMethodSelect.dispatchEvent(new Event('change'));
-
-  // Handle form submission
-  form.addEventListener('submit', (event) => {
-    event.preventDefault(); // Prevent form from refreshing the page
-
-    const name = document.getElementById('name').value;
-    const address = document.getElementById('address').value;
-    const city = document.getElementById('city').value;
-    const state = document.getElementById('state').value;
-    const zip = document.getElementById('zip').value;
-    const paymentMethod = document.getElementById('payment-method').value;
-    let paymentDetails;
-
-    if (paymentMethod === 'credit-card') {
-      paymentDetails = {
-        cardName: document.getElementById('card-name').value,
-        cardNumber: document.getElementById('card-number').value,
-        expDate: document.getElementById('exp-date').value,
-        cvv: document.getElementById('cvv').value,
-      };
-    } else if (paymentMethod === 'paypal') {
-      paymentDetails = {
-        paypalEmail: document.getElementById('paypal-email').value,
-      };
-    }
-
-    // Order object to send to server
-    const order = {
-      name,
-      address,
-      city,
-      state,
-      zip,
-      paymentMethod,
-      paymentDetails,
-      items: cartItems,
-      subtotal,
-      shipping,
-      tax,
-      total,
-    };
-
-    // Mock order submission (in reality, you would send it to a server)
-    console.log('Order submitted:', order);
-    alert('Order successfully submitted!');
-
-    // Clear cart after submission
-    localStorage.removeItem('cart');
-    updateCartCount();
-
-    // Redirect to a success page or home page
-    window.location.href = '../index.html';
-  });
+  const checkout = new CheckoutProcess('cart', '#order-summary');
 });
