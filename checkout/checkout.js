@@ -4,7 +4,7 @@ function formDataToJSON(formElement) {
   const convertedJSON = {};
 
   formData.forEach((value, key) => {
-    convertedJSON[key] = value;
+      convertedJSON[key] = value;
   });
 
   return convertedJSON;
@@ -13,130 +13,144 @@ function formDataToJSON(formElement) {
 // Package cart items for order submission
 function packageItems(items) {
   return items.map(item => ({
-    id: item.id,
-    price: item.price,
-    name: item.name,
-    quantity: item.quantity,
+      id: item.id,
+      price: item.price,
+      name: item.name,
+      quantity: item.quantity,
   }));
 }
 
 class CheckoutProcess {
-  constructor(cartKey, outputSelector) {
-    this.cartKey = cartKey;
-    this.outputSelector = outputSelector;
-    this.cartItems = this.getCartItems();
-    this.init();
+  constructor(cartKey) {
+      this.cartKey = cartKey;
+      this.cartItems = this.getCartItems();
+      this.orderTotal = 0; // Initialize order total
+      this.init();
   }
 
   getCartItems() {
-    return JSON.parse(localStorage.getItem(this.cartKey)) || [];
+      return JSON.parse(localStorage.getItem(this.cartKey)) || [];
   }
 
   // Calculate total values and update UI
   calculateOrderSummary() {
-    let subtotal = 0;
-    this.cartItems.forEach(item => {
-      subtotal += item.price * item.quantity;
-    });
+      let subtotal = 0;
+      this.cartItems.forEach(item => {
+          subtotal += item.price * item.quantity;
+      });
 
-    const tax = subtotal * 0.08; // Assume an 8% tax rate
-    const shippingCost = document.querySelector("#shipping").value === "express" ? 15.00 : 5.00;
-    const total = subtotal + tax + shippingCost;
+      const tax = subtotal * 0.08; // Assume an 8% tax rate
+      const shippingCost = document.querySelector("#shipping").value === "express" ? 15.00 : 5.00;
+      const total = subtotal + tax + shippingCost;
 
-    document.getElementById("num-items").textContent = this.cartItems.length;
-    document.getElementById("subtotal").textContent = subtotal.toFixed(2);
-    document.getElementById("tax").textContent = tax.toFixed(2);
-    document.getElementById("shipping-cost").textContent = shippingCost.toFixed(2);
-    document.getElementById("order-total").textContent = total.toFixed(2);
+      // Update UI elements
+      document.getElementById("num-items").textContent = this.cartItems.length;
+      document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+      document.getElementById("tax").textContent = tax.toFixed(2);
+      document.getElementById("shipping-cost").textContent = shippingCost.toFixed(2);
+      document.getElementById("order-total").textContent = total.toFixed(2);
 
-    // Store total for confirmation during checkout
-    this.orderTotal = total;
+      // Store total for confirmation during checkout
+      this.orderTotal = total;
   }
 
   init() {
-    this.calculateOrderSummary();
-    this.setupPaymentOptions();
-    this.setupOrderSubmission();
+      this.calculateOrderSummary();
+      this.setupPaymentOptions();
+      this.setupOrderSubmission();
   }
 
   setupPaymentOptions() {
-    const creditCardInfo = document.getElementById("credit-card-info");
-    const paypalInfo = document.getElementById("paypal-info");
+      const creditCardInfo = document.getElementById("credit-card-info");
+      const paypalInfo = document.getElementById("paypal-info");
 
-    document.getElementById("credit-card-btn").addEventListener("click", () => {
-      creditCardInfo.style.display = "block";
-      paypalInfo.style.display = "none";
+      document.getElementById("credit-card-btn").addEventListener("click", () => {
+          creditCardInfo.style.display = "block";
+          paypalInfo.style.display = "none";
 
-      // Make Credit Card fields required
-      document.getElementById("card-name").setAttribute("required", true);
-      document.getElementById("card-number").setAttribute("required", true);
-      document.getElementById("exp-date").setAttribute("required", true);
-      document.getElementById("cvv").setAttribute("required", true);
+          // Make Credit Card fields required
+          this.setPaymentFieldsRequired(true);
+      });
 
-      // Remove required attribute from PayPal field
-      document.getElementById("paypal-email").removeAttribute("required");
-    });
+      document.getElementById("paypal-btn").addEventListener("click", () => {
+          creditCardInfo.style.display = "none";
+          paypalInfo.style.display = "block";
 
-    document.getElementById("paypal-btn").addEventListener("click", () => {
-      creditCardInfo.style.display = "none";
-      paypalInfo.style.display = "block";
+          // Make PayPal field required
+          document.getElementById("paypal-email").setAttribute("required", true);
 
-      // Make PayPal field required
-      document.getElementById("paypal-email").setAttribute("required", true);
+          // Remove required attributes from Credit Card fields
+          this.setPaymentFieldsRequired(false);
+      });
 
-      // Remove required attributes from Credit Card fields
-      document.getElementById("card-name").removeAttribute("required");
-      document.getElementById("card-number").removeAttribute("required");
-      document.getElementById("exp-date").removeAttribute("required");
-      document.getElementById("cvv").removeAttribute("required");
-    });
+      document.getElementById("shipping").addEventListener("change", () => {
+          this.calculateOrderSummary();
+      });
+  }
 
-    document.getElementById("shipping").addEventListener("change", () => {
-      this.calculateOrderSummary();
-    });
+  setPaymentFieldsRequired(isCreditCard) {
+      const creditCardFields = [
+          "card-name",
+          "card-number",
+          "exp-date",
+          "cvv"
+      ];
+
+      creditCardFields.forEach(field => {
+          if (isCreditCard) {
+              document.getElementById(field).setAttribute("required", true);
+          } else {
+              document.getElementById(field).removeAttribute("required");
+          }
+      });
+
+      // For PayPal, we only set the PayPal email required
+      if (!isCreditCard) {
+          document.getElementById("paypal-email").setAttribute("required", true);
+      }
   }
 
   setupOrderSubmission() {
-    const checkoutForm = document.getElementById("checkout-form");
-    checkoutForm.addEventListener("submit", (event) => {
-      event.preventDefault();
+      const checkoutForm = document.getElementById("checkout-form");
+      checkoutForm.addEventListener("submit", (event) => {
+          event.preventDefault();
 
-      // Validate the cart has items
-      if (this.cartItems.length === 0) {
-        alert("Your cart is empty. Please add items to proceed.");
-        return;
-      }
+          // Validate the cart has items
+          if (this.cartItems.length === 0) {
+              alert("Your cart is empty. Please add items to proceed.");
+              return;
+          }
 
-      // Confirm the order total
-      const confirmed = confirm(`Your order total is $${this.orderTotal.toFixed(2)}. Confirm to place your order.`);
-      if (!confirmed) return;
+          // Confirm the order total
+          const confirmed = confirm(`Your order total is $${this.orderTotal.toFixed(2)}. Confirm to place your order.`);
+          if (!confirmed) return;
 
-      // Convert form data to JSON and package cart items
-      const formData = formDataToJSON(checkoutForm);
-      const orderData = {
-        customerInfo: formData,
-        items: packageItems(this.cartItems),
-        total: this.orderTotal,
-      };
+          // Convert form data to JSON and package cart items
+          const formData = formDataToJSON(checkoutForm);
+          const orderData = {
+              customerInfo: formData,
+              items: packageItems(this.cartItems),
+              total: this.orderTotal,
+          };
 
-      // Save orderData to local storage for record-keeping (or simulate sending to server)
-      localStorage.setItem("lastOrder", JSON.stringify(orderData));
+          // Save orderData to local storage for record-keeping (or simulate sending to server)
+          localStorage.setItem("lastOrder", JSON.stringify(orderData));
 
-      // Clear cart after successful checkout
-      this.clearCart();
+          // Clear cart after successful checkout
+          this.clearCart();
 
-      alert("Order placed successfully! Thank you for your purchase.");
-      window.location.href = "../index.html"; // Redirect to homepage or order confirmation page
-    });
+          alert("Order placed successfully! Thank you for your purchase.");
+          window.location.href = "../index.html"; // Redirect to homepage or order confirmation page
+      });
   }
 
   clearCart() {
-    localStorage.removeItem(this.cartKey);
-    document.querySelector('#cart-count .item-count').textContent = '0'; // Reset cart count
+      localStorage.removeItem(this.cartKey);
+      document.querySelector('#cart-count .item-count').textContent = '0'; // Reset cart count
   }
 }
 
 // Initialize checkout process
 document.addEventListener('DOMContentLoaded', () => {
-  const checkout = new CheckoutProcess('cart', '#order-summary');
+  new CheckoutProcess('cart');
 });
